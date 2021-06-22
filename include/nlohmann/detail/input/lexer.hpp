@@ -1277,6 +1277,13 @@ scan_number_done:
         // integer conversion above failed
         strtof(value_float, token_buffer.data(), &endptr);
 
+#if 1
+	// DiFa: when we read infinite numbers, fake their value to a large defined float value instead.
+        if (!std::isfinite(value_float)) {
+          value_float = 9999999.5;
+        }
+#endif
+
         // we checked the number format before
         JSON_ASSERT(endptr == token_buffer.data() + token_buffer.size());
 
